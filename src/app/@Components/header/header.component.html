@@ -1,0 +1,196 @@
+<section class="et-hero-tabs">
+  <a class="navbar-brand" href="#">
+    <img
+      src="./assets/img/PETOPIA_blanco.png"
+      alt="Logo"
+      style="width: 10%; position: absolute; left: 2%; bottom: 16%"
+      class="rounded-pill"
+    />
+  </a>
+
+  <div class="center">
+    <button
+      class="show-btn"
+      style="
+        position: absolute;
+        right: 15%;
+        top: 1%;
+        background-color: chocolate;
+        color: aliceblue;
+        border-radius: 10%;
+        border: none;
+      "
+      (click)="signout()"
+      [hidden]="!isLoggedIn"
+    >
+      sign out
+    </button>
+
+    <svg viewBox="0 0 1000 1000" class="svg_rot"></svg>
+    <input type="checkbox" id="show" />
+    <label
+      for="show"
+      class="show-btn"
+      style="
+        position: absolute;
+        right: 1%;
+        top: 1%;
+        background-color: chocolate;
+        color: aliceblue;
+        border-radius: 10%;
+      "
+    >
+      {{ !isLoggedIn ? "sign in" : "Card" }}
+    </label>
+
+    <div
+      class="cont"
+      style="height: 610px"
+      [ngStyle]="{ left: isLoggedIn ? '45%' : '50%' }"
+    >
+      <!-- login form -->
+      <label
+        [hidden]="isLoggedIn"
+        for="show"
+        class="close-btn fas fa-times"
+        title="close"
+      ></label>
+      <div [hidden]="isLoggedIn" class="text">Login Form</div>
+      <form [hidden]="isLoggedIn" #signinForm="ngForm" (submit)="signin()">
+        <p style="margin-top: 20px" [ngStyle]="{ color: messageColor }">
+          {{ alertMessage }}
+        </p>
+        <div class="data">
+          <label>Email or Phone</label>
+          <input name="email" [(ngModel)]="email" type="text" required />
+        </div>
+        <div class="data">
+          <label>Password</label>
+          <input
+            name="password"
+            [(ngModel)]="password"
+            type="password"
+            required
+          />
+        </div>
+        <br />
+        <div class="forgot-pass">
+          <a href="#">Forgot Password?</a>
+        </div>
+        <div class="btn">
+          <div class="inner"></div>
+          <button>Login</button>
+        </div>
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <div class="signup-link">Not a member? <a href="#">Signup now</a></div>
+      </form>
+
+      <!-- add card form -->
+      <label
+        [hidden]="!isLoggedIn"
+        for="card"
+        class="close-btn fas fa-times"
+        title="close"
+      ></label>
+      <div [hidden]="!isLoggedIn" class="text">Card Form</div>
+
+      <form [hidden]="!isLoggedIn" #cardForm="ngForm" (submit)="submitCard()">
+        <p style="margin-top: 20px" [ngStyle]="{ color: messageColor }">
+          {{ alertMessage }}
+        </p>
+        <!-- form options -->
+        <div style="display: flex">
+          <!-- form action -->
+          <div>
+            <label for="action">Action</label>
+            <select [(ngModel)]="actionValue" name="action" id="action">
+              <option value="create">create</option>
+              <option value="update">update</option>
+              <option value="delete">delete</option>
+            </select>
+          </div>
+          <!-- card name -->
+          <div [hidden]="actionValue == 'create'">
+            <label for="card">Card</label>
+            <select name="cardID" [(ngModel)]="cardID" id="card" required>
+              <option *ngFor="let card of cardsService.cards" [value]="card.id">
+                {{ card.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <!-- form name -->
+        <div [hidden]="actionValue == 'delete'" class="data">
+          <label>Card name</label>
+          <input name="name" [(ngModel)]="name" type="text" required />
+        </div>
+        <div [hidden]="actionValue == 'delete'" class="data">
+          <label>Card Description</label>
+          <input
+            name="description"
+            [(ngModel)]="description"
+            type="text"
+            required
+          />
+        </div>
+        <div [hidden]="actionValue == 'delete'" class="data">
+          <label>Card Image</label>
+          <input
+            (change)="onChangeFile($event)"
+            accept=".jpg, .jpeg, .png"
+            type="file"
+            required
+          />
+        </div>
+        <div class="btn">
+          <div class="inner"></div>
+          <button>Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="et-hero-tabs-container">
+    <div class="col-md-3">
+      <img
+        src="./assets/img/dog-silhouette.png"
+        id="dog"
+        class="d-none d-lg-inline"
+      />
+      <span class="num font-big color-rojo">21</span>
+      <span class="num2">PERROS EN ADOPCIÓN</span>
+    </div>
+
+    <div class="col-md-3">
+      <img
+        src="./assets/img/adopted-dog-silhouette.png"
+        id="adopted-dog"
+        class="d-none d-lg-inline"
+      />
+      <span class="num font-big color-verde">354</span>
+      <span class="num2">PERROS ADOPTADOS</span>
+    </div>
+
+    <div class="col-md-3">
+      <img
+        src="./assets/img/cat-silhouette.png"
+        id="cat"
+        class="d-none d-lg-inline"
+      />
+      <span class="num font-big color-rojo">73</span>
+      <span class="num2">GATOS EN ADOPCIÓN</span>
+    </div>
+
+    <div class="col-md-3">
+      <img
+        src="./assets/img/adopted-cat-silhouette.png"
+        id="adopted-cat"
+        class="d-none d-lg-inline"
+      />
+      <span class="num font-big color-verde">96</span>
+      <span class="num2">GATOS ADOPTADOS</span>
+      <!--<a class="et-hero-tab" href="#tab-other">Other</a>
+      <span class="et-hero-tab-slider"></span>-->
+    </div>
+  </div>
+</section>

@@ -1,0 +1,112 @@
+<main>
+  <ul class="cards">
+    <li *ngFor="let card of cardsService.cards; let i = index">
+      <a href="" class="card">
+        <img
+          [src]="cardsService.imageSrcArr[i]"
+          class="card__image"
+          [alt]="card.image.name"
+        />
+        <div class="card__overlay">
+          <div class="card__header">
+            <div class="card__header-text">
+              <h3 class="card__title">{{ card.name }}</h3>
+              <span class="card__status">{{
+                card.createdAt | date : "longDate"
+              }}</span>
+            </div>
+          </div>
+          <p class="card__description">{{ card.description }}</p>
+        </div>
+      </a>
+    </li>
+  </ul>
+
+  <!--<div class="container cont">
+    <div class="d-flex flex-wrap justify-content-center py-3 mb-4">
+      <div class="col-md-3">
+        <img src="./img/dog-silhouette.png" id="dog" />
+        <span class="num font-big color-rojo">21</span>
+        <span class="num2">PERROS EN ADOPCIÓN</span>
+      </div>
+
+      <div class="col-md-3">
+        <img src="./img/adopted-dog-silhouette.png" id="adopted-dog" />
+        <span class="num font-big color-verde">354</span>
+        <span class="num2">PERROS ADOPTADOS</span>
+      </div>
+
+      <div class="col-md-3">
+        <img src="./img/cat-silhouette.png" id="cat" />
+        <span class="num font-big color-rojo">73</span>
+        <span class="num2">GATOS EN ADOPCIÓN</span>
+      </div>
+
+      <div class="col-md-3">
+        <img src="./img/adopted-cat-silhouette.png" id="adopted-cat" />
+        <span class="num font-big color-verde">96</span>
+        <span class="num2">GATOS ADOPTADOS</span>
+      </div>
+    </div>
+  </div>-->
+
+  <!-- <ul class="cards">
+    <li>
+      <a href="" class="card">
+        <img src="https://i.imgur.com/oYiTqum.jpg" class="card__image" alt="" />
+        <div class="card__overlay">
+          <div class="card__header">
+            <div class="card__header-text">
+              <h3 class="card__title">Jessica Parker</h3>
+              <span class="card__status">1 hour ago</span>
+            </div>
+          </div>
+          <p class="card__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, blanditiis?</p>
+        </div>
+      </a>
+    </li>
+    <li>
+      <a href="" class="card">
+        <img src="https://i.imgur.com/2DhmtJ4.jpg" class="card__image" alt="" />
+        <div class="card__overlay">
+          <div class="card__header">
+            <div class="card__header-text">
+              <h3 class="card__title">kim Cattrall</h3>
+              <span class="card__status">3 hours ago</span>
+            </div>
+          </div>
+          <p class="card__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, blanditiis?</p>
+        </div>
+      </a>
+    </li>
+    <li>
+      <a href="" class="card">
+        <img src="https://i.imgur.com/oYiTqum.jpg" class="card__image" alt="" />
+        <div class="card__overlay">
+          <div class="card__header">
+            <div class="card__header-text">
+              <h3 class="card__title">Jessica Parker</h3>
+              <span class="card__tagline">Lorem ipsum dolor sit amet consectetur</span>
+              <span class="card__status">1 hour ago</span>
+            </div>
+          </div>
+          <p class="card__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, blanditiis?</p>
+        </div>
+      </a>
+    </li>
+    <li>
+      <a href="" class="card">
+        <img src="https://i.imgur.com/2DhmtJ4.jpg" class="card__image" alt="" />
+        <div class="card__overlay">
+          <div class="card__header">
+            <div class="card__header-text">
+              <h3 class="card__title">kim Cattrall</h3>
+              <span class="card__status">3 hours ago</span>
+            </div>
+          </div>
+          <p class="card__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, blanditiis?</p>
+        </div>
+      </a>
+    </li>
+  </ul> -->
+</main>
