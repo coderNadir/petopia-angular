@@ -82,7 +82,7 @@ export class HeaderComponent implements OnInit {
       .subscribe({
         next: (data) => {
           console.log('🟢 success update card:', data);
-          this.alertMessage = 'card updated successfully';
+          this.alertMessage = 'animal updated successfully';
           this.alertColor = 'green';
           this.animalService.loadAnimals();
         },
@@ -102,6 +102,8 @@ export class HeaderComponent implements OnInit {
       .delete(`http://localhost:8080/api/v1/animals/${this.animalID}`)
       .subscribe((res) => {
         console.log(' success delete card:', this.animalID);
+        this.alertMessage = 'animal deleted successfully';
+        this.alertColor = 'green';
         this.animalService.loadAnimals();
       });
   }
@@ -121,7 +123,7 @@ export class HeaderComponent implements OnInit {
     this.http.post('http://localhost:8080/api/v1/animals', form).subscribe({
       next: (data) => {
         console.log('🟢 success card:', data);
-        this.alertMessage = 'card added successfully';
+        this.alertMessage = 'animal added successfully';
         this.alertColor = 'green';
         this.animalService.loadAnimals();
       },
