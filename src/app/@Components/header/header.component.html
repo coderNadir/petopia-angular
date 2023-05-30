@@ -13,7 +13,7 @@
       class="show-btn"
       style="
         position: absolute;
-        right: 15%;
+        right: 10%;
         top: 1%;
         background-color: chocolate;
         color: aliceblue;
@@ -45,7 +45,7 @@
 
     <div
       class="cont"
-      style="height: 610px"
+      style="height: 520px; overflow: scroll"
       [ngStyle]="{ left: isLoggedIn ? '45%' : '50%' }"
     >
       <!-- login form -->
@@ -85,16 +85,20 @@
         <div class="signup-link">Not a member? <a href="#">Signup now</a></div>
       </form>
 
-      <!-- add card form -->
+      <!-- animal form -->
       <label
         [hidden]="!isLoggedIn"
         for="card"
         class="close-btn fas fa-times"
         title="close"
       ></label>
-      <div [hidden]="!isLoggedIn" class="text">Card Form</div>
+      <div [hidden]="!isLoggedIn" class="text">Card Animal</div>
 
-      <form [hidden]="!isLoggedIn" #cardForm="ngForm" (submit)="submitCard()">
+      <form
+        [hidden]="!isLoggedIn"
+        #cardForm="ngForm"
+        (submit)="submitCard(cardForm)"
+      >
         <p style="margin-top: 20px" [ngStyle]="{ color: messageColor }">
           {{ alertMessage }}
         </p>
@@ -112,29 +116,71 @@
           <!-- card name -->
           <div [hidden]="actionValue == 'create'">
             <label for="card">Card</label>
-            <select name="cardID" [(ngModel)]="cardID" id="card" required>
-              <option *ngFor="let card of cardsService.cards" [value]="card.id">
-                {{ card.name }}
+            <select name="animalID" [(ngModel)]="animalID" required>
+              <option
+                *ngFor="let animal of animalService.animals"
+                [value]="animal.id"
+              >
+                {{ animal.name }}
               </option>
             </select>
           </div>
         </div>
         <!-- form name -->
         <div [hidden]="actionValue == 'delete'" class="data">
-          <label>Card name</label>
-          <input name="name" [(ngModel)]="name" type="text" required />
+          <label>Name</label>
+          <input
+            placeholder="animal name"
+            name="name"
+            [(ngModel)]="name"
+            type="text"
+            required
+          />
         </div>
         <div [hidden]="actionValue == 'delete'" class="data">
-          <label>Card Description</label>
+          <label>Date of birth</label>
           <input
+            placeholder="yyyy-mm-dd"
+            name="dateOfBirth"
+            [(ngModel)]="dateOfBirth"
+            type="text"
+            required
+          />
+        </div>
+        <div [hidden]="actionValue == 'delete'" class="data">
+          <label>Description</label>
+          <input
+            placeholder="animal description"
             name="description"
             [(ngModel)]="description"
             type="text"
             required
           />
         </div>
+        <div style="display: flex; justify-content: space-between">
+          <div [hidden]="actionValue == 'delete'">
+            <label for="card">Size</label>
+            <select name="size" [(ngModel)]="size" id="size" required>
+              <option
+                *ngFor="let size of ['small', 'medium', 'big']"
+                [value]="size"
+              >
+                {{ size }}
+              </option>
+            </select>
+          </div>
+          <div [hidden]="actionValue == 'delete'">
+            <label for="card">Sex</label>
+            <select name="sex" [(ngModel)]="sex" id="sex" required>
+              <option *ngFor="let sex of ['male', 'female']" [value]="sex">
+                {{ sex }}
+              </option>
+            </select>
+          </div>
+        </div>
+
         <div [hidden]="actionValue == 'delete'" class="data">
-          <label>Card Image</label>
+          <label>Image</label>
           <input
             (change)="onChangeFile($event)"
             accept=".jpg, .jpeg, .png"
@@ -142,6 +188,7 @@
             required
           />
         </div>
+
         <div class="btn">
           <div class="inner"></div>
           <button>Submit</button>

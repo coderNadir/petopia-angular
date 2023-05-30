@@ -1,22 +1,26 @@
 <main>
   <ul class="cards">
-    <li *ngFor="let card of cardsService.cards; let i = index">
+    <li *ngFor="let animal of animalService.animals; let i = index">
       <a href="" class="card">
         <img
-          [src]="cardsService.imageSrcArr[i]"
+          style="width: 100%; height: 500px; object-fit: cover"
+          [src]="animal.picture"
           class="card__image"
-          [alt]="card.image.name"
+          [alt]="animal.image.name"
         />
         <div class="card__overlay">
           <div class="card__header">
             <div class="card__header-text">
-              <h3 class="card__title">{{ card.name }}</h3>
-              <span class="card__status">{{
-                card.createdAt | date : "longDate"
-              }}</span>
+              <h3 class="card__title">Name: {{ animal.name }}</h3>
+              <h3 class="card__title">Sex: {{ animal.sex }}</h3>
+              <h3 class="card__title">Size: {{ animal.size }}</h3>
+              <span class="card__status"
+                >Date of birth:
+                {{ animal.date_of_birth | date : "longDate" }}</span
+              >
             </div>
           </div>
-          <p class="card__description">{{ card.description }}</p>
+          <p class="card__description">Description: {{ animal.description }}</p>
         </div>
       </a>
     </li>

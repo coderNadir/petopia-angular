@@ -1,7 +1,8 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
-import { CardsService } from 'src/app/services/cards.service';
+import { AnimalService } from 'src/app/services/animal.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-header',
@@ -15,11 +16,14 @@ export class HeaderComponent implements OnInit {
 
   // -- card form
   name: string = '';
+  dateOfBirth: string = '';
   description: string = '';
+  size: string = '';
   image: File | null = null;
+  sex: string = '';
 
   actionValue: string = 'create';
-  cardID: number = 0;
+  animalID: number = 0;
 
   alertMessage: string = '';
   alertColor: string = '';
@@ -28,7 +32,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private cookieService: CookieService,
-    public cardsService: CardsService
+    public animalService: AnimalService
   ) {}
 
   ngOnInit(): void {
@@ -42,38 +46,45 @@ export class HeaderComponent implements OnInit {
   hideAlertMessage() {
     setTimeout(() => {
       this.alertMessage = '';
-    }, 3000);
+    }, 5000);
   }
 
   onChangeFile(event: Event) {
     this.image = (event.target as HTMLInputElement)?.files?.item(0) ?? null;
   }
 
-  submitCard() {
+  submitCard(form: NgForm) {
     if (this.actionValue == 'create') this.addCard();
     if (this.actionValue == 'update') this.updateCard();
     if (this.actionValue == 'delete') this.deleteCard();
     this.hideAlertMessage();
+    form.reset();
   }
 
   updateCard() {
     console.log('update card fn called');
     // console.log('add card fn called');
     const form = new FormData();
-    form.append('image', this.image!);
     form.append('name', this.name);
+    form.append('date_of_birth', this.dateOfBirth);
     form.append('description', this.description);
+    form.append('size', this.size);
+    form.append('image', this.image!);
+    form.append('sex', this.sex);
     form.append('token', this.cookieService.get('token'));
     form.append('email', this.cookieService.get('email'));
 
+    console.log('animal id: ', this.animalID);
+    console.log('formData:', form.getAll);
+
     this.http
-      .patch(`http://localhost:8080/api/v1/cards/${this.cardID}`, form)
+      .patch(`http://localhost:8080/api/v1/animals/${this.animalID}`, form)
       .subscribe({
         next: (data) => {
           console.log('🟢 success update card:', data);
           this.alertMessage = 'card updated successfully';
           this.alertColor = 'green';
-          this.cardsService.loadCards();
+          this.animalService.loadAnimals();
         },
         error: (err) => {
           const { error } = err;
@@ -88,28 +99,31 @@ export class HeaderComponent implements OnInit {
     console.log('delete card fn called');
 
     this.http
-      .delete(`http://localhost:8080/api/v1/cards/${this.cardID}`)
+      .delete(`http://localhost:8080/api/v1/animals/${this.animalID}`)
       .subscribe((res) => {
-        console.log(' success delete card:', this.cardID);
-        this.cardsService.loadCards();
+        console.log(' success delete card:', this.animalID);
+        this.animalService.loadAnimals();
       });
   }
 
   addCard() {
     // console.log('add card fn called');
     const form = new FormData();
-    form.append('image', this.image!);
     form.append('name', this.name);
+    form.append('date_of_birth', this.dateOfBirth);
     form.append('description', this.description);
+    form.append('size', this.size);
+    form.append('image', this.image!);
+    form.append('sex', this.sex);
     form.append('token', this.cookieService.get('token'));
     form.append('email', this.cookieService.get('email'));
 
-    this.http.post('http://localhost:8080/api/v1/cards', form).subscribe({
+    this.http.post('http://localhost:8080/api/v1/animals', form).subscribe({
       next: (data) => {
         console.log('🟢 success card:', data);
         this.alertMessage = 'card added successfully';
         this.alertColor = 'green';
-        this.cardsService.loadCards();
+        this.animalService.loadAnimals();
       },
       error: (err) => {
         const { error } = err;

@@ -1,5 +1,5 @@
 import { Component, OnInit, Sanitizer } from '@angular/core';
-import { CardsService } from 'src/app/services/cards.service';
+import { AnimalService } from 'src/app/services/animal.service';
 
 @Component({
   selector: 'app-cards',
@@ -7,7 +7,7 @@ import { CardsService } from 'src/app/services/cards.service';
   styleUrls: ['./cards.component.css'],
 })
 export class CardsComponent implements OnInit {
-  constructor(public cardsService: CardsService) {}
+  constructor(public animalService: AnimalService) {}
 
   ngOnInit(): void {}
 }
