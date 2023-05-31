@@ -21,6 +21,7 @@ export class HeaderComponent implements OnInit {
   size: string = '';
   image: File | null = null;
   sex: string = '';
+  type: string = '';
 
   actionValue: string = 'create';
   animalID: number = 0;
@@ -71,6 +72,7 @@ export class HeaderComponent implements OnInit {
     form.append('size', this.size);
     form.append('image', this.image!);
     form.append('sex', this.sex);
+    form.append('animal_type', this.type);
     form.append('token', this.cookieService.get('token'));
     form.append('email', this.cookieService.get('email'));
 
@@ -117,6 +119,7 @@ export class HeaderComponent implements OnInit {
     form.append('size', this.size);
     form.append('image', this.image!);
     form.append('sex', this.sex);
+    form.append('animal_type', this.type);
     form.append('token', this.cookieService.get('token'));
     form.append('email', this.cookieService.get('email'));
 

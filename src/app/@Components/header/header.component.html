@@ -170,6 +170,14 @@
             </select>
           </div>
           <div [hidden]="actionValue == 'delete'">
+            <label for="card">Type</label>
+            <select name="type" [(ngModel)]="type" id="type" required>
+              <option *ngFor="let type of ['cat', 'dog']" [value]="type">
+                {{ type }}
+              </option>
+            </select>
+          </div>
+          <div [hidden]="actionValue == 'delete'">
             <label for="card">Sex</label>
             <select name="sex" [(ngModel)]="sex" id="sex" required>
               <option *ngFor="let sex of ['male', 'female']" [value]="sex">
@@ -204,7 +212,9 @@
         id="dog"
         class="d-none d-lg-inline"
       />
-      <span class="num font-big color-rojo">21</span>
+      <span class="num font-big color-rojo">{{
+        animalService.dogs.length
+      }}</span>
       <span class="num2">PERROS EN ADOPCIÓN</span>
     </div>
 
@@ -224,7 +234,9 @@
         id="cat"
         class="d-none d-lg-inline"
       />
-      <span class="num font-big color-rojo">73</span>
+      <span class="num font-big color-rojo">{{
+        animalService.cats.length
+      }}</span>
       <span class="num2">GATOS EN ADOPCIÓN</span>
     </div>
 
