@@ -11,8 +11,11 @@ import { NgForm } from '@angular/forms';
 })
 export class HeaderComponent implements OnInit {
   // -- sign in form
+  userName: string = '';
   email: string = '';
   password: string = '';
+
+  authAction: string = 'signin';
 
   // -- card form
   name: string = '';
@@ -137,6 +140,36 @@ export class HeaderComponent implements OnInit {
         this.alertMessage = error.message;
       },
     });
+  }
+
+  auth() {
+    if (this.authAction == 'signin') this.signin();
+    if (this.authAction == 'signup') this.signup();
+  }
+
+  signup() {
+    this.http
+      .post('http://localhost:8080/api/v1/users', {
+        name: this.userName,
+        email: this.email,
+        password: this.password,
+      })
+      .subscribe({
+        next: (res: any) => {
+          console.log('🟢🟢 res sign up:', res);
+          this.alertMessage = 'registered';
+          this.alertColor = 'green';
+          // clear fields
+          this.email = this.password = this.userName = '';
+        },
+        error: (err) => {
+          const { error } = err;
+          console.log('🔴🔴 error sign up', err);
+          this.alertMessage = error.message;
+          this.alertColor = 'red';
+        },
+      });
+    this.hideAlertMessage();
   }
 
   signin() {

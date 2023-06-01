@@ -55,13 +55,19 @@
         class="close-btn fas fa-times"
         title="close"
       ></label>
-      <div [hidden]="isLoggedIn" class="text">Login Form</div>
-      <form [hidden]="isLoggedIn" #signinForm="ngForm" (submit)="signin()">
+      <div [hidden]="isLoggedIn" class="text">
+        {{ authAction == "signin" ? "Login" : "Signup" }} Form
+      </div>
+      <form [hidden]="isLoggedIn" #signinForm="ngForm" (submit)="auth()">
         <p style="margin-top: 20px" [ngStyle]="{ color: messageColor }">
           {{ alertMessage }}
         </p>
+        <div [hidden]="authAction == 'signin'" class="data">
+          <label>Name</label>
+          <input name="userName" [(ngModel)]="userName" type="text" required />
+        </div>
         <div class="data">
-          <label>Email or Phone</label>
+          <label>Email</label>
           <input name="email" [(ngModel)]="email" type="text" required />
         </div>
         <div class="data">
@@ -79,10 +85,25 @@
         </div>
         <div class="btn">
           <div class="inner"></div>
-          <button>Login</button>
+          <button>{{ authAction == "signin" ? "Sign in" : "Sign Up" }}</button>
         </div>
         <div class="g-signin2" data-onsuccess="onSignIn"></div>
-        <div class="signup-link">Not a member? <a href="#">Signup now</a></div>
+        <div [hidden]="authAction == 'signup'" class="signup-link">
+          Not a member?
+          <a
+            style="cursor: pointer; color: #666"
+            (click)="authAction = 'signup'"
+            >Signup now</a
+          >
+        </div>
+        <div [hidden]="authAction == 'signin'" class="signup-link">
+          Have an account?
+          <a
+            style="cursor: pointer; color: #666"
+            (click)="authAction = 'signin'"
+            >Signin now</a
+          >
+        </div>
       </form>
 
       <!-- animal form -->
